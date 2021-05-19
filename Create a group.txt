@@ -1,17 +1,28 @@
 There are specific access levels for users defined by the xFusionCorp Industries system admin team. Rather than providing access levels to every individual user, the team has decided to create groups with required access levels and add users to that groups as needed. See the following requirements:
 
 
-a. Create a group named nautilus_noc in all App servers in Stratos Datacenter.
+a. Create a group named nautilus_admin_users in all App servers in Stratos Datacenter.
 
-b. Add the user stark to nautilus_noc in all App servers. (create the user if not present already)
+b. Add the user stark to nautilus_admin_users in all App servers. (create the user if not present already)
 
+ssh tony@stapp01 'echo "rootpass" | sudo -Sv && bash -s' < my_script.sh stark nautilus_admin_users
+ssh steve@stapp02 'echo "rootpass" | sudo -Sv && bash -s' < my_script.sh stark nautilus_admin_users
+ssh banner@stapp03 'echo "rootpass" | sudo -Sv && bash -s' < my_script.sh stark nautilus_admin_users
+    
+my_scrpt.sh
+===========
 
-    1  cat /etc/passwd
-    2  cat /etc/group
-    3  sudo groupadd nautilus_noc
-    4  cat /etc/group
-    5  adduser stark
-    6  cat /etc/passwd
-    7  usermod -a -G nautilus_noc stark            -- ADDING USER TO GROUP
-    8  cat /etc/passwd
-    9  cat /etc/group
+    #!/bin/bash
+    if [ !(grep $1 /etc/passwd)]
+      then
+        adduser $1
+    fi    
+    if [ !(grep $2 /etc/group)]
+      then
+        groupadd $2
+        usermod -a -G $2 $1
+    fi
+    if [(grep $1 /etc/passwd) && (grep $2 /etc/group) && (grep $1 (grep $2 /etc/group))
+      then
+        echo "success"
+    fi
