@@ -1,11 +1,16 @@
-xFusionCorp Industries has hosted some static websites on Nautilus Application Servers in Stratos DC. There are some confidential directories on document root that need to be password protected. Since they are using Apache for hosting the websites so production support team has decided to use .htaccess with basic auth. There is a website needs to be uploaded to /var/www/html/finance on Nautilus App Server 1. But before that we need to setup the authentication.
+xFusionCorp Industries has hosted some static websites on Nautilus Application Servers in Stratos DC. 
+There are some confidential directories on document root that need to be password protected. 
+Since they are using Apache for hosting the websites so the production support team has decided to use .htaccess with basic auth. 
+There is a website that needs to be uploaded to /var/www/html/finance on Nautilus App Server 1. 
+But before that we need to setup the authentication.
 
 
-1.Create /var/www/html/finance direcotry if doesn't exist.
+1.Create /var/www/html/finance directory if doesn't exist.
 
 2.Add an user ravi in htpasswd and set its password to B4zNgHA7Ya.
 
-3.There is a file /tmp/index.html placed on Jump Server. Copy the same to new directory you created, please make sure default document root should remain /var/www/html.
+3.There is a file /tmp/index.html placed on Jump Server. Copy the same to new directory you created, 
+please make sure default document root should remain /var/www/html.
 
   
 FIRST WE NEED TO MOVE INDEX.HTML FROM JUMP TO APPLICATION SERVER THROUGH SCP    (scp index.html banner@stapp03:/home/banner/)
@@ -16,7 +21,6 @@ FIRST WE NEED TO MOVE INDEX.HTML FROM JUMP TO APPLICATION SERVER THROUGH SCP    
     5  cd /var/www/html/
     6  ls
     7  sudo vi .htaccess
-
   AuthType Basic
   AuthName "Secure Content"
   AuthUserFile /var/www/html/finance/.htpasswd
