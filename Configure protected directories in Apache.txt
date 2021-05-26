@@ -1,19 +1,19 @@
 xFusionCorp Industries has hosted some static websites on Nautilus Application Servers in Stratos DC. 
 There are some confidential directories on document root that need to be password protected. 
 Since they are using Apache for hosting the websites so the production support team has decided to use .htaccess with basic auth. 
-There is a website that needs to be uploaded to /var/www/html/finance on Nautilus App Server 1. 
+There is a website that needs to be uploaded to /var/www/html/security on Nautilus App Server 2. 
 But before that we need to setup the authentication.
 
 
-1.Create /var/www/html/finance directory if doesn't exist.
+1.Create /var/www/html/security directory if doesn't exist.
 
-2.Add an user ravi in htpasswd and set its password to B4zNgHA7Ya.
+2.Add an user anita in htpasswd and set its password to YchZHRcLkL.
 
 3.There is a file /tmp/index.html placed on Jump Server. Copy the same to new directory you created, 
 please make sure default document root should remain /var/www/html.
 
   
-FIRST WE NEED TO MOVE INDEX.HTML FROM JUMP TO APPLICATION SERVER THROUGH SCP    (scp index.html banner@stapp03:/home/banner/)
+FIRST WE NEED TO MOVE INDEX.HTML FROM JUMP TO APPLICATION SERVER THROUGH SCP    (scp index.html steve@stapp02:~)
     1  sudo -i
     2  sudo systemctl start httpd
     3  sudo systemctl enable httpd
@@ -23,18 +23,18 @@ FIRST WE NEED TO MOVE INDEX.HTML FROM JUMP TO APPLICATION SERVER THROUGH SCP    
     7  sudo vi .htaccess
   AuthType Basic
   AuthName "Secure Content"
-  AuthUserFile /var/www/html/finance/.htpasswd
+  AuthUserFile /var/www/html/security/.htpasswd
   require valid-user
 
     8  ls -la
-    9  sudo mkdir finance
+    9  sudo mkdir security
    10  ls
    11  cd
-   12  sudo mv index.html /var/www/html/finance/
+   12  sudo mv index.html /var/www/html/security/
    13  ls
-   14  sudo htpasswd -c /var/www/html/finance/.htpasswd ravi
-       password:B4zNgHA7Ya
-       retype password:B4zNgHA7Ya
+   14  sudo htpasswd -c /var/www/html/security/.htpasswd anita
+       password:YchZHRcLkL
+       retype password:YchZHRcLkL
    15  cd /etc/httpd/conf/
    16  sudo vi httpd.conf
 
@@ -43,7 +43,7 @@ AllowOverride none (or) ALL --> AllowOverride AuthConfig       ----IN /VAR/WWW/H
    17  cd /var/www/html/
    18  sudo systemctl restart httpd
    19  sudo curl http://localhost:8080
-   20  sudo curl http://localhost:8080 -u ravi
+   20  sudo curl http://localhost:8080 -u anita
 
 
 https://tecadmin.net/configure-basic-authentication-in-apache-using-htaccess/
