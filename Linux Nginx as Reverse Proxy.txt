@@ -3,10 +3,10 @@ so that they can manage the backups of different websites graphically.
 They have shared some requirements to setup the same, please accomplish the tasks as per detail given below:
 
 
-a. Install Apache Server on Nautilus Backup Server and configure it to use 5004 port (do not bind it to 127.0.0.1 only, 
+a. Install Apache Server on Nautilus Backup Server and configure it to use 6400 port (do not bind it to 127.0.0.1 only, 
 keep it default i.e let Apache listen on server's IP, hostname, localhost, 127.0.0.1 etc).
 
-b. Install Nginx webserver on Nautilus Backup Server and configure it ot use 8095.
+b. Install Nginx webserver on Nautilus Backup Server and configure it ot use 8091.
 
 c. Configure Nginx as a reverse proxy server for Apache.
 
@@ -14,7 +14,7 @@ d. There is a sample index file /home/index.html on Jump Host, copy that file to
 
 e. Make sure to start Apache and Nginx services.
 
-f. You can test final changes using curl command, e.g curl http://<backup server IP or Hostname>:8095
+f. You can test final changes using curl command, e.g curl http://<backup server IP or Hostname>:8091
 
 
     1  sudo yum install httpd
@@ -31,13 +31,13 @@ f. You can test final changes using curl command, e.g curl http://<backup server
    10  sudo systemctl start nginx
    11  sudo systemctl enable nginx
    12  sudo systemctl status nginx
-   13  curl localhost:8095
+   13  curl localhost:8091
    14  cd /etc/nginx/
    15  ls
-   16  sudo vi nginx.conf                      ----CHANGED PORT TO 8095
+   16  sudo vi nginx.conf                      ----CHANGED PORT TO 8091
    17  sudo systemctl restart nginx
    18  curl localhost:8091
-   19  sudo vi nginx.conf                      HERE WE ADD LOCATION LO {proxy_pass http://localhost:5004;} HERE WE ADD APACHE PORT URL
+   19  sudo vi nginx.conf                      HERE WE ADD LOCATION LO {proxy_pass http://localhost:6400;} HERE WE ADD APACHE PORT URL
 
 server {
         listen       8091 default_server;
