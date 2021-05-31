@@ -1,7 +1,10 @@
-Nautilus system admin's team is planning to deploy a front end application for their backup utility on Nautilus Backup Server, so that they can manage the backups of different websites graphically. They have shared some requirements to setup the same, please accomplish the tasks as per detail given below:
+Nautilus system admin's team is planning to deploy a front end application for their backup utility on Nautilus Backup Server,
+so that they can manage the backups of different websites graphically. 
+They have shared some requirements to setup the same, please accomplish the tasks as per detail given below:
 
 
-a. Install Apache Server on Nautilus Backup Server and configure it to use 5004 port (do not bind it to 127.0.0.1 only, keep it default i.e let Apache listen on server's IP, hostname, localhost, 127.0.0.1 etc).
+a. Install Apache Server on Nautilus Backup Server and configure it to use 5004 port (do not bind it to 127.0.0.1 only, 
+keep it default i.e let Apache listen on server's IP, hostname, localhost, 127.0.0.1 etc).
 
 b. Install Nginx webserver on Nautilus Backup Server and configure it ot use 8095.
 
@@ -17,10 +20,12 @@ f. You can test final changes using curl command, e.g curl http://<backup server
     1  sudo yum install httpd
     2  sudo systemctl enable httpd
     3  sudo systemctl start httpd
-    4  curl localhost:5004
-    5  sudo vi /etc/httpd/conf/httpd.conf   --- CHANGED PORT TO 5004
+    4  curl localhost:6400
+    5  sudo vi /etc/httpd/conf/httpd.conf   --- CHANGED PORT TO 6400
     6  sudo systemctl restart httpd
-    7  curl localhost:5004
+    7  curl localhost:6400
+    
+
     8  sudo yum install epel-release
     9  sudo yum install nginx
    10  sudo systemctl start nginx
@@ -31,12 +36,12 @@ f. You can test final changes using curl command, e.g curl http://<backup server
    15  ls
    16  sudo vi nginx.conf                      ----CHANGED PORT TO 8095
    17  sudo systemctl restart nginx
-   18  curl localhost:8095
+   18  curl localhost:8091
    19  sudo vi nginx.conf                      HERE WE ADD LOCATION LO {proxy_pass http://localhost:5004;} HERE WE ADD APACHE PORT URL
 
 server {
-        listen       8095 default_server;
-        listen       [::]:8095 default_server;
+        listen       8091 default_server;
+        listen       [::]:8091 default_server;
         server_name  _;
         root         /usr/share/nginx/html;
 
@@ -44,11 +49,12 @@ server {
         include /etc/nginx/default.d/*.conf;
 
         location / {
-           proxy_pass http://localhost:5004;
+           proxy_pass http://localhost:6400;
         }
+}
 
    20  sudo systemctl restart nginx
-   21  curl localhost:8095                         -- COMPLETED QUESTION C
+   21  curl localhost:8091                         -- COMPLETED QUESTION C
  QUESTION-D
  ==========  
 $jump_server#sudo scp /home/index.html clint@stbkp01:/var/www/html/
@@ -57,12 +63,12 @@ IT IS NOT COPIED WHY MEANS ITS OWNER UNDER ROOT USER FIRST SEND TO CLINT USER IN
 AND SWITCH TO STBKP01 SERVER
 
    22  sudo mv index.html /var/www/html/
-   23  curl localhost:8095
-   24  curl localhost:5004
+   23  curl localhost:8091
+   24  curl localhost:6400
    25  sudo vi /etc/nginx/nginx.conf
    26  sudo cat /etc/nginx/nginx.conf
    27  sudo systemctl status httpd
    28  sudo systemctl status nginx
-   29  curl localhost:8095
-   30  curl localhost:5004
+   29  curl localhost:8091
+   30  curl localhost:6400
 
