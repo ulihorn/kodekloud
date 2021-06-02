@@ -3,14 +3,14 @@ They have some pre-requites to get ready that server for application deployment.
 Prepare the server as per requirements shared below:
 
 
-1.Install and configure nginx on App Server 3.
+1.Install and configure nginx on App Server 2.
 
 2.On App Server 2 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. 
 Move them to some appropriate location and deploy the same in Nginx.
 
 3.Create an index.html file with content Welcome! under Nginx document root.
 
-4.For final testing try to access the App Server 3 link (either hostname or IP) from jump host using curl command. 
+4.For final testing try to access the App Server 2 link (either hostname or IP) from jump host using curl command. 
 For example curl -Ik https://<app-server-ip>/.
 
 
@@ -26,22 +26,25 @@ ROOT
     6  systemctl status nginx
     7  yum -y install mod_ssl          --- FIRST QUESTION COMPLETED UPTO HERE
   
-    4  cd /usr/share/nginx/html
-    6  ls
-    7  sudo unlink index.html          --WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
-    8  ls
-    9  vi index.html                   --IN THIS I ADD Welcome!
-   10  ls
-   11  cd /tmp/
-   12  cat nautilus.crt
-   13  cat nautilus.key
-   14  ls -la
-   15  chmod 777 nautilus.crt nautilus.key
-   16  ls -la
-   17  cp nautilus.crt /usr/share/nginx/html/
-   18  cp nautilus.key /usr/share/nginx/html/
+    4  #cd /usr/share/nginx/html
+    6  #ls
+    7  #sudo unlink index.html          --WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
+    8  #ls
+    9  vi /usr/share/nginx/html/index.html                   --In this change to Welcome! #IN THIS I ADD Welcome!
+   10  #ls
+   11  #cd /tmp/
+   12  #cat nautilus.crt
+   13  #cat nautilus.key
+   14  #ls -la
+   15  #chmod 777 nautilus.crt nautilus.key -- first see if this is necessary
+   16  #ls -la
+   17  #cp nautilus.crt /usr/share/nginx/html/
+   18  #cp nautilus.key /usr/share/nginx/html/
+       cp nautilus.crt /etc/pki/tls/certs
+       cp nautilus.key /etc/pki/tls/certs
    19  cd /usr/share/nginx/html/                      ---UPTO HERE CRT&KEY FILE COPIED TO APPROPRIATE LOCATION (COPY OR MOVE YOUR WISH)
    20  ls
+       ip a -- Get ip address
    21  vi /etc/nginx/nginx.conf
              
 
@@ -56,9 +59,11 @@ ROOT
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_prefer_server_ciphers on;
         ssl_ciphers ECDHE+RSAGCM:ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:!aNULL!eNull:!EXPORT:!DES:!3DES:!MD5:!DSS;
-        ssl_certificate      /usr/share/nginx/html/nautilus.crt;
-        ssl_certificate_key  /usr/share/nginx/html/nautilus.key;               
-              
+        #ssl_certificate      /usr/share/nginx/html/nautilus.crt;
+        #ssl_certificate_key  /usr/share/nginx/html/nautilus.key;               
+        ssl_certificate      /etc/pki/tls/certs/nautilus.crt;
+        ssl_certificate_key  /etc/pki/tls/certs/nautilus.key;               
+             
 
    22  systemctl restart nginx
   
@@ -68,6 +73,8 @@ ROOT
 OUTPUT QUESTION 4
 =================
 thor@jump_host /$ curl -Ik https://172.16.238.12/
+thor@jump_host /$ curl -Ik https://stapp02
+
 HTTP/1.1 200 OK
 Server: nginx/1.16.1
 Date: Mon, 13 Jul 2020 08:48:33 GMT
