@@ -10,3 +10,19 @@ b. Replace all occurrence of word the to them and save results in /home/BSD_REPL
 Note: Let's say you are asked to replace word to with from. In that case, make sure not to alter any words containing this string; 
 for example upto, contributor etc.
 
+sudo -i
+cd /home
+cat BSD.txt | wc -l  # get number of lines in file
+grep "following" BSD.txt # look at lines containing 'following'
+grep "following" BSD.txt | wc -l # get number of lines containing 'following' in file
+
+sed '/following/d' BSD.txt > BSD_DELETE.txt # write file without lines containing 'following to new file
+cat BSD_DELETE.txt | wc -l # check that number of lines in new file equal number of lines in old file minus number of lines containing 'following'
+
+grep "to" BSD.txt # see if there are any words not 'to' which contain 'to'
+grep "to" BSD.txt | wc -l # numbr of lines containing 'to'
+grep -w "to" BSD.txt or grep "\<to\>" BSD.txt # show lines containing 'to' as whole word
+grep -w "to" BSD.txt | wc -l # number of lines containing 'to' as whole word
+sed 's/\<to\>/from/g' BSD.txt > BSD_REPLACE.txt # \< and \> ensure word boundary
+grep -w "to" BSD_REPLACE.txt | wc -l # number of lines containing 'to' as whole word should be 0
+grep "to" BSD_REPLACE.txt | wc -l # should be the difference between line 23 and line 27
