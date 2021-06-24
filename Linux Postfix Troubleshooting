@@ -2,3 +2,17 @@ Some users of the monitoring app have reported issues with xFusionCorp Industrie
 They have a mail server in Stork DC where they are using postfix mail transfer agent. 
 Postfix service seems to fail. 
 Try to identify the root cause and fix it.
+
+
+sudo -i
+systemctl status postfix
+
+vi /etc/postfix/main.cf
+inet_interfaces = all -> inet_interfaces = 127.0.0.1, 17.16.238.17
+vi /etc/hosts
+comment out ::1
+
+systemctl start postfix
+systemctl status postfix
+
+https://nixhive.com/fatal-parameter-inet_interfaces-no-local-interface-found-for-1/
