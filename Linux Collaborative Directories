@@ -7,10 +7,13 @@ The directory should be group owned by the group dbadmin and the group should ow
 The directory should be read/write/execute to the group owners, and others should not have any access.
 
 sudo -i
-    # check if dbadmin and/or dbadmin group exist
+getent passwd |grep dbadmin     # check if dbadmin and/or dbadmin group exist
+getent group |grep dbadmin
 mkdir -p /dbadmin/data
 ls -la /dbadmin/data
 chgrp dbadmin /dbadmin/data
-ls -la /dbadmin/data
+ls -la /dbadmin/data # check that owner/group are root:dbadmin
 chmod 770 /dbadmin/data
-ls -la /dbadmin/data
+ls -la /dbadmin/data # check that permissions on folder are drwxrwx---
+exit
+ls -la /dbadmin/data # should not have access to this directory
