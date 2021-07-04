@@ -6,8 +6,6 @@ Setup a collaborative directory /dbadmin/data on Nautilus App 1 server in Strato
 The directory should be group owned by the group dbadmin and the group should own the files inside the directory. 
 The directory should be read/write/execute to the group owners, and others should not have any access.
 
-The directory should be read/write/execute to the group owners, and others should not have any access.
-
 sudo -i
 getent passwd |grep dbadmin     # check if dbadmin and/or dbadmin group exist
 getent group |grep dbadmin
