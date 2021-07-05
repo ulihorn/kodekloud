@@ -5,3 +5,9 @@ Find the details below:
 
 On App Server 1 find all files (not directories) owned by user siva inside /home/usersdata directory and 
 copy them all while keeping the folder structure (preserve the directories path) to /official directory.
+
+# This question is ambiguous. The use copy when I suspect they mean move. It's not clear what filter out means. Lets assume they mean move the files
+sudo -i
+find /home/usersdata -type f -user siva | xargs -I % cp % /official # Test to see if files seem correct.
+ls -la /official 
+find /home/usersdata -type f -user siva | xargs -I % mv % /official # Now move the files 
