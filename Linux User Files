@@ -8,6 +8,6 @@ copy them all while keeping the folder structure (preserve the directories path)
 
 # This question is ambiguous. The use copy when I suspect they mean move. It's not clear what filter out means. Lets assume they mean move the files
 sudo -i
-find /home/usersdata -type f -user siva | xargs -I % cp % /official # Test to see if files seem correct.
+find /home/usersdata -type f -user siva | xargs -I % cp --parents % /official # Test to see if files seem correct.
 ls -la /official 
-find /home/usersdata -type f -user siva | xargs -I % mv % /official # Now move the files 
+find /home/usersdata -type f -user siva | xargs -I % rm % # remove files from original location 
