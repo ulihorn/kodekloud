@@ -6,6 +6,7 @@ Update the message of the day on all application and db servers for Nautilus.
 Make use of the approved template located at /home/thor/nautilus_banner on jump host
 
 scp nautilus_banner tony@stapp01:~
+Ir0nM@n
 ssh tony@stapp01
 sudo -i
 vi /etc/ssh/sshd_config
@@ -14,6 +15,9 @@ banner /home/tony/nautilus_banner
 systemctl reload sshd
 ssh tony@stapp01 # from jump_host to test
 
+# if "scp: command not found" then install on host
+rpm -qa | grep openssh-* # should have openssh-clients listed
+yum install openssh-clients -y
 
 
 
