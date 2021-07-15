@@ -7,7 +7,7 @@ Make use of the approved template located at /home/thor/nautilus_banner on jump 
 
 scp nautilus_banner tony@stapp01:~
 Ir0nM@n
-ssh tony@stapp01
+ssh tony@stapp01   steve@stapp02 banner@stapp03 peter@stdb01
 sudo -i
 vi /etc/ssh/sshd_config
 /banner
