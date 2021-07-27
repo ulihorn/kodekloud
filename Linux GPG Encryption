@@ -12,6 +12,7 @@ gpg --list-keys
 gpg --import public_key.asc
 gpg --list-keys # lists kodekloud@kodekloud.com
 gpg --armor --output encrypted_me.asc -r kodekloud@kodekloud.com --encrypt encrypt_me.txt
+gpg --encrypt -r kod
 
 gpg --decrypt decrypt_me.asc > decrypted_me.txt
 kodekloud 
