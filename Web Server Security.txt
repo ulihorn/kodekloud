@@ -1,5 +1,7 @@
-During recent security audit, application security team of xFusionCorp Industries found some security issues with 
-Apache web server on Nautilus App Server 2 server in Stratos DC. They have listed out some security issues that need to be fixed on this server. 
+During recent security audit, application security team of 
+xFusionCorp Industries found some security issues with 
+Apache web server on Nautilus App Server 2 server in Stratos DC. 
+They have listed out some security issues that need to be fixed on this server. 
 Please apply the below mentioned security settings:
 
 
