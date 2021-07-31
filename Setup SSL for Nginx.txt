@@ -1,11 +1,13 @@
-The system admins team of xFusionCorp Industries needs to deploy a new application on App Server 2 in Stratos Datacenter. 
+The system admins team of xFusionCorp Industries needs to deploy 
+a new application on App Server 2 in Stratos Datacenter. 
 They have some pre-requites to get ready that server for application deployment. 
 Prepare the server as per requirements shared below:
 
 
 1.Install and configure nginx on App Server 2.
 
-2.On App Server 2 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. 
+2.On App Server 2 there is a self signed SSL certificate and key present 
+at location /tmp/nautilus.crt and /tmp/nautilus.key. 
 Move them to some appropriate location and deploy the same in Nginx.
 
 3.Create an index.html file with content Welcome! under Nginx document root.
@@ -24,13 +26,13 @@ ROOT
     4  systemctl start nginx
     5  systemctl enable nginx
     6  systemctl status nginx
-    7  yum -y install mod_ssl          --- FIRST QUESTION COMPLETED UPTO HERE
+    7  yum -y install mod_ssl           # FIRST QUESTION COMPLETED UPTO HERE
   
     4  #cd /usr/share/nginx/html
     6  #ls
-    7  #sudo unlink index.html          --WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
+    7  #sudo unlink index.html           # WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
     8  #ls
-    9  vi /usr/share/nginx/html/index.html                   --In this change to Welcome! #IN THIS I ADD Welcome!
+    9  vi /usr/share/nginx/html/index.html                   # In this change to Welcome! #IN THIS I ADD Welcome!
    10  #ls
    11  #cd /tmp/
    12  #cat nautilus.crt
@@ -42,7 +44,7 @@ ROOT
    18  #cp nautilus.key /usr/share/nginx/html/
        cp nautilus.crt /etc/pki/tls/certs
        cp nautilus.key /etc/pki/tls/certs
-   19  cd /usr/share/nginx/html/                      ---UPTO HERE CRT&KEY FILE COPIED TO APPROPRIATE LOCATION (COPY OR MOVE YOUR WISH)
+   19  cd /usr/share/nginx/html/                      # UPTO HERE CRT&KEY FILE COPIED TO APPROPRIATE LOCATION (COPY OR MOVE YOUR WISH)
    20  ls
        ip a -- Get ip address
    21  vi /etc/nginx/nginx.conf
@@ -52,10 +54,10 @@ ROOT
     server {
         listen       80 default_server;
         listen       [::]:80 default_server;
-        listen       443 ssl;                      --ADD THIS LINE
-        server_name  172.16.238.12;                --HERE ADD IPADDRESS
+        listen       443 ssl;                      # ADD THIS LINE
+        server_name  172.16.238.12;                # HERE ADD IPADDRESS
         root         /usr/share/nginx/html;
-        index        index.html                    --ADDD THIS LINE
+        index        index.html                    # ADDD THIS LINE
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_prefer_server_ciphers on;
         ssl_ciphers ECDHE+RSAGCM:ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:!aNULL!eNull:!EXPORT:!DES:!3DES:!MD5:!DSS;
