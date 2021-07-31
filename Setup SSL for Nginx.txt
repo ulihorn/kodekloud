@@ -55,7 +55,7 @@ ROOT
         listen       80 default_server;
         listen       [::]:80 default_server;
         listen       443 ssl;                      # ADD THIS LINE
-        server_name  172.16.238.12;                # HERE ADD IPADDRESS
+        server_name  172.16.238.11;                # HERE ADD IPADDRESS
         root         /usr/share/nginx/html;
         index        index.html                    # ADDD THIS LINE
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -74,7 +74,7 @@ ROOT
    
 OUTPUT QUESTION 4
 =================
-thor@jump_host /$ curl -Ik https://172.16.238.12/
+thor@jump_host /$ curl -Ik https://172.16.238.11/
 thor@jump_host /$ curl -Ik https://stapp02
 
 HTTP/1.1 200 OK
