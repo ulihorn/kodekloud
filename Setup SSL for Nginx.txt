@@ -20,37 +20,25 @@ For example curl -Ik https://<app-server-ip>/.
   
 ROOT
 
-    1  yum update -y
-    2  yum install epel-release -y
-    3  yum install nginx -y
+    1  yum update -y # This takes too long.
+    2  yum install epel-release nginx mod_ssl -y
+    3  yum install epel-release nginx mod_ssl -y # need to do this twice because of dependencies
     4  systemctl start nginx
     5  systemctl enable nginx
     6  systemctl status nginx
-    7  yum -y install mod_ssl           # FIRST QUESTION COMPLETED UPTO HERE
-  
-    4  #cd /usr/share/nginx/html
-    6  #ls
-    7  #sudo unlink index.html           # WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
-    8  #ls
-    9  vi /usr/share/nginx/html/index.html                   # In this change to Welcome! #IN THIS I ADD Welcome!
-   10  #ls
-   11  #cd /tmp/
-   12  #cat nautilus.crt
-   13  #cat nautilus.key
-   14  #ls -la
-   15  #chmod 777 nautilus.crt nautilus.key -- first see if this is necessary
-   16  #ls -la
-   17  #cp nautilus.crt /usr/share/nginx/html/
-   18  #cp nautilus.key /usr/share/nginx/html/
-       cp nautilus.crt /etc/pki/tls/certs
-       cp nautilus.key /etc/pki/tls/certs
-   19  cd /usr/share/nginx/html/                      # UPTO HERE CRT&KEY FILE COPIED TO APPROPRIATE LOCATION (COPY OR MOVE YOUR WISH)
-   20  ls
-       ip a -- Get ip address
-   21  vi /etc/nginx/nginx.conf
-             
-
-    # add into "server" section
+        
+    8  unlink /usr/share/nginx/html/index.html           # WHEN I UNLINKED INDEX.HTML IS REMOVED AUTOMATTICALLY THEN I CREATED NEWONE AS PER QUESTION(3)
+    9  vi /usr/share/nginx/html/index.html               # In this change to Welcome! #IN THIS I ADD Welcome!
+   10  cat /usr/share/nginx/html/index.html              # confirm file contents and location
+   11  cat /tmp/nautilus.crt
+   12  cat /tmp/nautilus.key
+   13  chmod 400 nautilus.key
+   14  cp /tmp/nautilus.* /etc/pki/tls/certs/
+   15  ls -la /etc/pki/tls/certs/                      # UPTO HERE CRT&KEY FILE COPIED TO APPROPRIATE LOCATION (COPY OR MOVE YOUR WISH)
+   16  ip a   # Get ip address
+   17  vi /etc/nginx/nginx.conf
+   
+    # delete existing "server" section contents and replace with the following ensure that server name has the correct ip address
     server {
         listen       80 default_server;
         listen       [::]:80 default_server;
@@ -61,22 +49,21 @@ ROOT
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_prefer_server_ciphers on;
         ssl_ciphers ECDHE+RSAGCM:ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:!aNULL!eNull:!EXPORT:!DES:!3DES:!MD5:!DSS;
-        #ssl_certificate      /usr/share/nginx/html/nautilus.crt;
-        #ssl_certificate_key  /usr/share/nginx/html/nautilus.key;               
         ssl_certificate      /etc/pki/tls/certs/nautilus.crt;
         ssl_certificate_key  /etc/pki/tls/certs/nautilus.key;               
-             
+  
+   18  systemctl restart nginx
+   19  curl localhost # test on local machine
+   20  curl -k https://172.16.238.11/ # Test on local machine Should be Welcome!
+   21  # Test on jump_host. See below:
 
-   22  systemctl restart nginx
-  
-   
-  
-   
 OUTPUT QUESTION 4
 =================
 thor@jump_host /$ curl -Ik https://172.16.238.11/
 thor@jump_host /$ curl -Ik https://stapp02
 
+# curl -I should give the following output:
+# =========================================
 HTTP/1.1 200 OK
 Server: nginx/1.16.1
 Date: Mon, 13 Jul 2020 08:48:33 GMT
@@ -88,10 +75,9 @@ ETag: "5f0c1ab4-9"
 Accept-Ranges: bytes
 
 
-
+References
+==========
 https://www.server-world.info/en/note?os=CentOS_7&p=nginx&f=4
-
-
 https://community.kodekloud.com/t/install-nginx-and-setup/4305/12
 
 
