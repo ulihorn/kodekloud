@@ -33,8 +33,8 @@ installed Apache modules and more, open your Apache web server configuration fil
 </Directory>
    13  sudo vi /etc/httpd/conf/httpd.conf       --CHANGE AllowOverride None to All (AllowOverride All) in <Directory "/var/www/html">
 
-** While using the .htaccess, make sure that Apache server is enabled to use .htaccess files for that directory. In most cases, .htaccess is disabled by default,
-to enable allowoverride to all
+** While using the .htaccess, make sure that Apache server is enabled to use .htaccess files for that directory. 
+In most cases, .htaccess is disabled by default,to enable allowoverride to all
 ** The first directory tag will disable using of .htaccess in /var/www directory. The second directory tag will enable the use of .htaccess under /var/www/html directory.
 	<VirtualHost *:80>
  	ServerName example.com
