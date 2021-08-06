@@ -13,3 +13,28 @@ Install httpd package on App Server 2 using yum and configure it to run on 6000 
     X-Content-Type-Options header with value nosniff
 
 Note: You can test using curl on the given app server as LBR URL will not work for this task.
+
+yum install httpd -y
+rpm -qa | grep  httpd
+
+vi /etc/httpd/conf/httpd.conf
+  Listen 6100
+  Header set X-XSS-Protection "1; mode=block"
+  Header always append X-Frame-Options SAMEORIGIN
+  Header set X-Content-Type-Options nosniff
+
+cat /etc/httpd/conf/httpd.conf |grep Listen
+cat /etc/httpd/conf/httpd.conf |grep Header
+
+vi /var/www/html/index.html
+  Welcome to the xFusion Corp Industries!
+
+systemctl start httpd
+systemctl status httpd
+systemctl enable httpd
+
+# Check for message (page)
+curl http://stapp02:6100
+
+# Check for the 3 headers
+curl -i http://stapp02:6100
