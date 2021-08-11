@@ -38,8 +38,8 @@ systemctl enable httpd
 # Tests
 curl http://stapp02.stratos.xfusioncorp.com:8082/          # <title>301 Moved Permanently</title>
 curl http://www.stapp02.stratos.xfusioncorp.com:8082/      # Welcome to the Nautilus Group!
-curl http://www.stapp02.stratos.xfusioncorp.com:8082/blog  # <title>302 Found</title>
-curl http://www.stapp02.stratos.xfusioncorp.com:8082/news  # <title>404 Not Found</title>
+curl http://www.stapp02.stratos.xfusioncorp.com:8082/blog/ # <title>302 Found</title>
+curl http://www.stapp02.stratos.xfusioncorp.com:8082/news/ # <title>404 Not Found</title>
 
   
 
