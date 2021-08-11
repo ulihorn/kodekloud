@@ -13,5 +13,36 @@ Configure Apache to add some redirects as mentioned below:
     b.) Redirect http://www.stapp02.stratos.xfusioncorp.com:<Port>/blog/ to 
                  http://www.stapp02.stratos.xfusioncorp.com:<Port>/news/. 
         This must be a temporary redirect i.e 302
+        
+        
+sudo -i
+
+vi /etc/httpd/conf/httpd.conf
+  Listen 8082
+
+vi /etc/httpd/conf.d/main.conf
+  <VirtualHost *:5003>
+  ServerName stapp02.stratos.xfusioncorp.com
+  Redirect 301 / http://www.stapp02.stratos.xfusioncorp.com:5003/
+  </VirtualHost>
+
+  <VirtualHost *:5003>
+  ServerName www.stapp02.stratos.xfusioncorp.com:5003/blog/
+  Redirect 302 /blog/ http://www.stapp02.stratos.xfusioncorp.com:5003/news/
+  </VirtualHost>
+  
+systemctl restart httpd
+systemctl status httpd
+systemctl enable httpd
+
+# Tests
+curl http://stapp02.stratos.xfusioncorp.com:8082/          # <title>301 Moved Permanently</title>
+curl http://www.stapp02.stratos.xfusioncorp.com:8082/      # Welcome to the Nautilus Group!
+curl http://www.stapp02.stratos.xfusioncorp.com:8082/blog  # <title>302 Found</title>
+curl http://www.stapp02.stratos.xfusioncorp.com:8082/news  # <title>404 Not Found</title>
+
+  
+
+  
     
     
