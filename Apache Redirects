@@ -21,14 +21,14 @@ vi /etc/httpd/conf/httpd.conf
   Listen 8082
 
 vi /etc/httpd/conf.d/main.conf
-  <VirtualHost *:5003>
-  ServerName stapp02.stratos.xfusioncorp.com
-  Redirect 301 / http://www.stapp02.stratos.xfusioncorp.com:5003/
+  <VirtualHost *:8082>
+  ServerName stapp02.stratos.xfusioncorp.com:8082
+  Redirect 301 / http://www.stapp02.stratos.xfusioncorp.com:8082/
   </VirtualHost>
 
-  <VirtualHost *:5003>
-  ServerName www.stapp02.stratos.xfusioncorp.com:5003/blog/
-  Redirect 302 /blog/ http://www.stapp02.stratos.xfusioncorp.com:5003/news/
+  <VirtualHost *:8082>
+  ServerName www.stapp02.stratos.xfusioncorp.com:8082/blog/
+  Redirect 302 /blog/ http://www.stapp02.stratos.xfusioncorp.com:8082/news/
   </VirtualHost>
   
 systemctl restart httpd
