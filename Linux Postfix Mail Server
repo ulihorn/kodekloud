@@ -12,6 +12,7 @@ We would like you to perform the following steps:
     Install and configure dovecot on the same server.
     
 ssh groot\@stmail01
+Gr00T123
 sudo -i
 rpm -qa |grep postfix
 rpm -qa |grep dovecot
