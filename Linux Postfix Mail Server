@@ -11,7 +11,7 @@ We would like you to perform the following steps:
 
     Install and configure dovecot on the same server.
     
-ssh groot\@stmail01
+ssh groot@stmail01
 Gr00T123
 sudo -i
 rpm -qa |grep postfix
@@ -20,6 +20,8 @@ rpm -qa |grep dovecot
 yum install postfix dovecot -y
 
 vi /etc/postfix/main.cf
+  #inet_interfaces = localhost # line 116 comment out
+  #mydestination = $myhostname, localhost.$mydomain, localhost # line 164 comment out
   myhostname = stmail01.stratos.xfusioncorp.com
   mydomain = stratos.xfusioncorp.com
   myorigin = $mydomain
