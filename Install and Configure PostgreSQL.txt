@@ -1,4 +1,7 @@
-As per details shared by Nautilus application development team. they are planning to deploy one newly developed application on Nautilus infra in Stratos DC. Application uses PostgreSQL database. So as a pre-requisite we need to setup PostgreSQL database server as per requirements shared below:
+As per details shared by Nautilus application development team. 
+they are planning to deploy one newly developed application on Nautilus infra in Stratos DC. 
+Application uses PostgreSQL database. 
+So as a pre-requisite we need to setup PostgreSQL database server as per requirements shared below:
 
 
 a. Install and configure PostgreSQL database on Nautilus database server.
@@ -11,17 +14,21 @@ d. Make appropriate settings to allow all local clients (local socket connection
 
 e. At the end its good to test the db connection using these new credentials from root user or server's sudo user.
 
-    1  hostnamectl
-    2  yum update -y
-    3  sudo yum install postgresql-server postgresql-contrib -y
-    4  sudo postgresql-setup initdb
-    5  sudo systemctl start postgresql
-    6  sudo systemctl enable postgresql
-    7  sudo systemctl status postgresql
-    8  su - postgres
-   -bash-4.2$ psql
+       ssh peter@stdb01 Sp!dy
+       sudo -i
+    1  #hostnamectl
+    2  #yum update -y
+    3  yum install postgresql-server postgresql-contrib -y
+    4  postgresql-setup initdb
+    5  systemctl start postgresql
+    6  systemctl enable postgresql
+    7  systemctl status postgresql
+    8  #su - postgres
+       #-bash-4.2$ psql
+       sudo -u postgres psql 
    postgres=# CREATE DATABASE kodekloud_db8;
-   postgres=# CREATE USER kodekloud_tim WITH ENCRYPTED PASSWORD 'YchZHRcLkL';       
+   #postgres=# CREATE USER kodekloud_tim WITH ENCRYPTED PASSWORD 'YchZHRcLkL';       
+   postgres=# CREATE USER kodekloud_tim WITH PASSWORD 'YchZHRcLkL';       
    postgres=# GRANT ALL PRIVILEGES ON DATABASE kodekloud_db8 TO "kodekloud_tim";
    postgres=# show grants for kodekloud_tim;
    postgres=# \l
@@ -29,14 +36,18 @@ e. At the end its good to test the db connection using these new credentials fro
    postgres=# \q
    -bash-4.2$ exit
 
-    9  psql -U kodekloud_tim -d kodekloud_db8 -h 127.0.0.1 -W     -- IT WILL NOT SIGNIN BECAUSE WE DIDN'T CHANGED MD5
-   10  vi /var/lib/pgsql/data/pg_hba.conf
+   vi /var/lib/pgsql/data/postgresql.conf
+     listen_addresses = 'localhost'
+     :x
 
-          IPv4 & IPv6 connections change identity to md5
-IPv4
-host	all	all	127.0.0.1/32	md5
-IPv6
-host	all	all	::1/128		md5
+    9  #psql -U kodekloud_tim -d kodekloud_db8 -h 127.0.0.1 -W     -- IT WILL NOT SIGNIN BECAUSE WE DIDN'T CHANGED MD5
+   10  vi /var/lib/pgsql/data/pg_hba.conf
+         local<tab>all<tab>all<tab><tab>md5 
+         # IPv4 & IPv6 connections change identity to md5
+         #IPv4
+         host<tab>all<tab>all<tab>127.0.0.1/32<tab>md5
+         #IPv6
+         host<tab>all<tab>all<tab>::1/128<tab>md5
    11  systemctl restart postgresql
    12  psql -U kodekloud_tim -d kodekloud_db8 -h 127.0.0.1 -W      --GIVE DATABASE USER PASSWORD HERE
                                                     |
